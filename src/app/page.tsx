@@ -1,5 +1,6 @@
 import Table from "./table";
 import { fetchGifts, togglePurchased } from "./actions";
+import { Suspense } from "react";
 
 const mockGifts = [
   {
@@ -68,12 +69,12 @@ export default async function Home() {
   const gifts = await fetchGifts();
 
   return (
-    <>
+    <Suspense fallback={<div>Cargando...</div>}>
       <Table
         initialGifts={gifts}
         togglePurchased={togglePurchased}
       />
-    </>
+    </Suspense>
   )
 };
 
