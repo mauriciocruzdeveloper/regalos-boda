@@ -44,6 +44,12 @@ VALUES
   ('Vajilla', false, null),
   ('Juego de sábanas', false, null),
   ('Cafetera', false, null),
+    ('Vajilla', false, null),
+  ('Juego de sábanas', false, null),
+  ('Cafetera', false, null),
+    ('Vajilla', false, null),
+  ('Juego de sábanas', false, null),
+  ('Cafetera', false, null),
   ('Juego de toallas', false, null);
 
 

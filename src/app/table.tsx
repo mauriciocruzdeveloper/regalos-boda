@@ -23,13 +23,17 @@ export default function Table({
       localStorage.setItem('userId', storedUserId);
     }
     setUserId(storedUserId);
-  }, []);
+  }, [gifts]);
+
+  console.log('!!!gifts', gifts);
+  console.log('!!!userId', userId);
 
   const handleTogglePurchased = (id: string, userId: string | null) => {
     if (!userId) return;
 
-    const selectedGift = gifts.find(gift => gift.selected_by === userId && gift.id !== id);
-    if (selectedGift) {
+    const selectedGift = gifts.find(gift => gift.selected_by === userId);
+    console.log('!!!selectedGift', selectedGift, id, userId)
+    if (selectedGift && selectedGift.id !== id) {
       alert('Ya has seleccionado un regalo.');
       return;
     }
