@@ -1,74 +1,79 @@
-'use client'
+import Table from "./table";
+import { fetchGifts, togglePurchased } from "./actions";
 
-import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
-interface Gift {
-  id: number;
-  name: string;
-  purchased: boolean;
-  selectedBy: string | null;
-}
-
-const initialGifts: Gift[] = [
-  { id: 1, name: 'Vajilla', purchased: false, selectedBy: null },
-  { id: 2, name: 'Juego de sábanas', purchased: false, selectedBy: null },
-  { id: 3, name: 'Cafetera', purchased: false, selectedBy: null },
-  { id: 4, name: 'Juego de toallas', purchased: false, selectedBy: null },
+const mockGifts = [
+  {
+    id: 1,
+    name: 'Cubiertos de plata',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 2,
+    name: 'Vajilla de porcelana',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 3,
+    name: 'Cristalería fina',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 4,
+    name: 'Cubertería de oro',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 5,
+    name: 'Juego de café',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 6,
+    name: 'Juego de té',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 7,
+    name: 'Cubertería de plata',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 8,
+    name: 'Vajilla de cerámica',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 9,
+    name: 'Cristalería de colores',
+    purchased: false,
+    selectedBy: null
+  },
+  {
+    id: 10,
+    name: 'Cubertería de acero',
+    purchased: false,
+    selectedBy: null
+  }
 ];
 
-const Home = () => {
-  const [gifts, setGifts] = useState<Gift[]>(initialGifts);
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    let storedUserId = localStorage.getItem('userId');
-    if (!storedUserId) {
-      storedUserId = uuidv4();
-      localStorage.setItem('userId', storedUserId);
-    }
-    setUserId(storedUserId);
-  }, []);
-
-  const togglePurchased = (id: number) => {
-    if (!userId) return;
-
-    const selectedGift = gifts.find(gift => gift.selectedBy === userId && gift.id !== id);
-    if (selectedGift) {
-      alert('Ya has seleccionado un regalo.');
-      return;
-    }
-
-    setGifts(gifts.map(gift =>
-      gift.id === id ? { ...gift, purchased: !gift.purchased, selectedBy: gift.purchased ? null : userId } : gift
-    ));
-  };
+export default async function Home() {
+  const gifts = await fetchGifts();
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-center mb-8 text-pink-600">Lista de Regalos de Boda</h1>
-        <ul className="space-y-4">
-          {gifts.map(gift => (
-            <li key={gift.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow">
-              <span className={`text-lg ${gift.purchased ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-                {gift.name}
-              </span>
-              <button
-                onClick={() => togglePurchased(gift.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold ${
-                  gift.purchased ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
-                }`}
-                disabled={gift.purchased && gift.selectedBy !== userId}
-              >
-                {gift.purchased ? (gift.selectedBy === userId ? 'Desmarcar' : 'Comprado') : 'Marcar como comprado'}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
+    <>
+      <Table
+        initialGifts={gifts}
+        togglePurchased={togglePurchased}
+      />
+    </>
+  )
 };
 
-export default Home;
