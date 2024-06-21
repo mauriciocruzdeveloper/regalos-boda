@@ -1,26 +1,46 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Gift {
   id: number;
   name: string;
   purchased: boolean;
+  selectedBy: string | null;
 }
 
 const initialGifts: Gift[] = [
-  { id: 1, name: 'Vajilla', purchased: false },
-  { id: 2, name: 'Juego de sábanas', purchased: false },
-  { id: 3, name: 'Cafetera', purchased: false },
-  { id: 4, name: 'Juego de toallas', purchased: false },
+  { id: 1, name: 'Vajilla', purchased: false, selectedBy: null },
+  { id: 2, name: 'Juego de sábanas', purchased: false, selectedBy: null },
+  { id: 3, name: 'Cafetera', purchased: false, selectedBy: null },
+  { id: 4, name: 'Juego de toallas', purchased: false, selectedBy: null },
 ];
 
 const Home = () => {
   const [gifts, setGifts] = useState<Gift[]>(initialGifts);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let storedUserId = localStorage.getItem('userId');
+    if (!storedUserId) {
+      storedUserId = uuidv4();
+      localStorage.setItem('userId', storedUserId);
+    }
+    setUserId(storedUserId);
+  }, []);
 
   const togglePurchased = (id: number) => {
+    if (!userId) return;
+
+    const selectedGift = gifts.find(gift => gift.selectedBy === userId && gift.id !== id);
+    if (selectedGift) {
+      alert('Ya has seleccionado un regalo.');
+      return;
+    }
+
     setGifts(gifts.map(gift =>
-      gift.id === id ? { ...gift, purchased: !gift.purchased } : gift
+      gift.id === id ? { ...gift, purchased: !gift.purchased, selectedBy: gift.purchased ? null : userId } : gift
     ));
   };
 
@@ -39,8 +59,9 @@ const Home = () => {
                 className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                   gift.purchased ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
                 }`}
+                disabled={gift.purchased && gift.selectedBy !== userId}
               >
-                {gift.purchased ? 'Desmarcar' : 'Marcar como comprado'}
+                {gift.purchased ? (gift.selectedBy === userId ? 'Desmarcar' : 'Comprado') : 'Marcar como comprado'}
               </button>
             </li>
           ))}
