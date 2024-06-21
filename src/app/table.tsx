@@ -6,7 +6,7 @@ import { GiftsTable } from './actions';
 
 export interface GiftsProps {
   initialGifts: GiftsTable[];
-  togglePurchased: (string: number, userId: string | null) => void;
+  togglePurchased: (id: string, userId: string | null) => void;
 }
 
 export default function Table({
