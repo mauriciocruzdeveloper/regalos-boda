@@ -6,7 +6,7 @@ import { GiftsTable } from './actions';
 
 export interface GiftsProps {
   initialGifts: GiftsTable[];
-  togglePurchased: (id: string, userId: string | null) => void;
+  togglePurchased: (id: string, userId: string) => Promise<void>;
 }
 
 export default function Table({
@@ -55,9 +55,9 @@ export default function Table({
                 className={`px-4 py-2 rounded-lg text-sm font-semibold ${
                   gift.purchased ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
                 }`}
-                disabled={gift.purchased && gift.selectedBy !== userId}
+                disabled={gift.purchased && gift.selected_by !== userId}
               >
-                {gift.purchased ? (gift.selectedBy === userId ? 'Desmarcar' : 'Comprado') : 'Marcar como comprado'}
+                {gift.purchased ? (gift.selected_by === userId ? 'Desmarcar' : 'Comprado') : 'Marcar como comprado'}
               </button>
             </li>
           ))}
