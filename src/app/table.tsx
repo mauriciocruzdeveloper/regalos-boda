@@ -10,10 +10,9 @@ export interface GiftsProps {
 }
 
 export default function Table({
-  initialGifts,
+  initialGifts: gifts,
   togglePurchased,
 }: GiftsProps) {
-  const [gifts, setGifts] = useState<GiftsTable[]>(initialGifts);
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,22 +24,15 @@ export default function Table({
     setUserId(storedUserId);
   }, [gifts]);
 
-  console.log('!!!gifts', gifts);
-  console.log('!!!userId', userId);
-
   const handleTogglePurchased = (id: string, userId: string | null) => {
     if (!userId) return;
 
     const selectedGift = gifts.find(gift => gift.selected_by === userId);
-    console.log('!!!selectedGift', selectedGift, id, userId)
     if (selectedGift && selectedGift.id !== id) {
       alert('Ya has seleccionado un regalo.');
       return;
     }
 
-    setGifts(gifts.map(gift =>
-      gift.id === id ? { ...gift, purchased: !gift.purchased, selectedBy: gift.purchased ? null : userId } : gift
-    ));
     togglePurchased(id, userId);
   };
 

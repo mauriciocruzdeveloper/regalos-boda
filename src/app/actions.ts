@@ -3,6 +3,7 @@
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export type GiftsTable = {
   id: string;
@@ -12,6 +13,7 @@ export type GiftsTable = {
 };
 
 export async function fetchGifts() {
+  noStore();
   try {
     const gifts = await sql<GiftsTable>`
       SELECT
@@ -20,9 +22,8 @@ export async function fetchGifts() {
         gifts.purchased,
         gifts.selected_by
       FROM gifts
-      ORDER BY gifts.name DESC
+      ORDER BY gifts.id DESC
     `;
-    console.log('!!!invoices', gifts)
     return gifts.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -31,7 +32,7 @@ export async function fetchGifts() {
 }
 
 export async function togglePurchased(id: string, userId: string) {
-  // try {
+  try {
     const gift = await sql<GiftsTable>`
       SELECT
         gifts.id,
@@ -64,8 +65,8 @@ export async function togglePurchased(id: string, userId: string) {
 
     revalidatePath('/');
     redirect('/');
-  // } catch (error) {
-  //   console.error('Database Error:', error);
-  //   throw new Error('Failed to toggle gift.');
-  // }
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to toggle gift.');
+  }
 }
