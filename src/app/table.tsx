@@ -2,24 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-interface Gift {
-  id: number;
-  name: string;
-  purchased: boolean;
-  selectedBy: string | null;
-}
+import { GiftsTable } from './actions';
 
 export interface GiftsProps {
-  initialGifts: Gift[];
-  togglePurchased: (id: number, userId: string | null) => void;
+  initialGifts: GiftsTable[];
+  togglePurchased: (string: number, userId: string | null) => void;
 }
 
 export default function Table({
   initialGifts,
   togglePurchased,
 }: GiftsProps) {
-  const [gifts, setGifts] = useState<Gift[]>(initialGifts);
+  const [gifts, setGifts] = useState<GiftsTable[]>(initialGifts);
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -31,10 +25,10 @@ export default function Table({
     setUserId(storedUserId);
   }, []);
 
-  const handleTogglePurchased = (id: number, userId: string | null) => {
+  const handleTogglePurchased = (id: string, userId: string | null) => {
     if (!userId) return;
 
-    const selectedGift = gifts.find(gift => gift.selectedBy === userId && gift.id !== id);
+    const selectedGift = gifts.find(gift => gift.selected_by === userId && gift.id !== id);
     if (selectedGift) {
       alert('Ya has seleccionado un regalo.');
       return;
