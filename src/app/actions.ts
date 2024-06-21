@@ -13,7 +13,7 @@ export type GiftsTable = {
 
 export async function fetchGifts() {
   try {
-    const invoices = await sql<GiftsTable>`
+    const gifts = await sql<GiftsTable>`
       SELECT
         gifts.id,
         gifts.name,
@@ -22,11 +22,11 @@ export async function fetchGifts() {
       FROM gifts
       ORDER BY gifts.name DESC
     `;
-
-    return invoices.rows;
+    console.log('!!!invoices', gifts)
+    return gifts.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch gifts.');
   }
 }
 
