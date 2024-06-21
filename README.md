@@ -41,16 +41,13 @@ BBDD
 
 INSERT INTO gifts (name, purchased, selected_by)
 VALUES 
-  ('Vajilla', false, null),
-  ('Juego de sábanas', false, null),
-  ('Cafetera', false, null),
-    ('Vajilla', false, null),
-  ('Juego de sábanas', false, null),
-  ('Cafetera', false, null),
-    ('Vajilla', false, null),
-  ('Juego de sábanas', false, null),
-  ('Cafetera', false, null),
-  ('Juego de toallas', false, null);
+  ('Juego de sábanas de 2 plz', false, null),
+  ('Cafetera Italiana (no eléctrica)', false, null),
+  ('Juego de toalla y toallón gris', false, null),
+  ('Juego de toalla y toallón beige', false, null),
+  ('Juego de toalla y toallón blanco', false, null),
+  ('Acolchado de 2 plz', false, null),
+  ('Juego de toalla y toallón gris', false, null);
 
 
 CREATE TABLE gifts (
