@@ -53,3 +53,5 @@ CREATE TABLE gifts (
     purchased BOOLEAN NOT NULL DEFAULT false,
     selected_by VARCHAR(36)
 );
+
+DELETE FROM gifts;

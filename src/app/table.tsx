@@ -57,7 +57,7 @@ export default function Table({
                 }`}
                 disabled={gift.purchased && gift.selected_by !== userId}
               >
-                {gift.purchased ? (gift.selected_by === userId ? 'Desmarcar' : 'Comprado') : 'Marcar como comprado'}
+                {gift.purchased ? (gift.selected_by === userId ? 'Desmarcar' : 'Comprometido') : 'Marcar'}
               </button>
             </li>
           ))}
