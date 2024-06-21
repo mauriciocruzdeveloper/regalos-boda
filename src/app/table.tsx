@@ -42,7 +42,7 @@ export default function Table({
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-center mb-8 text-pink-600">
+        <h1 className="text-3xl font-bold text-center mb-8 text-customGold">
           Sugerencias de Regalos
         </h1>
         <ul className="space-y-4">
@@ -64,8 +64,8 @@ export default function Table({
                 onClick={() => handleTogglePurchased(gift.id, userId)}
                 className={`w-3/12 min-w-32 px-4 py-2 rounded-lg text-sm font-semibold ${
                   gift.purchased
-                    ? "bg-red-500 text-white"
-                    : "bg-green-500 text-white"
+                    ? "bg-customLightGreen text-white"
+                    : "bg-customOlive text-white"
                 }`}
                 disabled={gift.purchased && gift.selected_by !== userId || loading === gift.id}
               >
