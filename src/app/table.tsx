@@ -69,7 +69,7 @@ export default function Table({
                 }`}
                 disabled={gift.purchased && gift.selected_by !== userId || loading === gift.id}
               >
-                {loading ? "Caragndo..." : gift.purchased
+                {loading ? "Cargando..." : gift.purchased
                   ? gift.selected_by === userId
                     ? "Desmarcar"
                     : "Comprometido"
